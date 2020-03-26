@@ -21,6 +21,10 @@ void addChar();
 void getChar();
 void getNonBlank();
 int lex();
+void stmt();
+void expr();
+void term();
+void factor();
 
 /* Character classes */
 #define LETTER 0
