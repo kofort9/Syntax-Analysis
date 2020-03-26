@@ -2,7 +2,7 @@
 /*  front.c - lexical analyzer system for simple arithmetic expression */
 
 #include <stdio.h>
-#include <cytype.h>
+#include <ctype.h>
 
 /* Global declarations */
 /* Variables */
@@ -29,6 +29,7 @@ int lex();
 
 /* Token codes */
 #define INT_LIT 10
+#define IDENT 11
 #define ASSIGN_OP 20
 #define ADD_OP 21
 #define SUB_OP 22
@@ -39,7 +40,7 @@ int lex();
 
 /************************************************/
 /* main driver */
-main() {
+int main() {
   /* Open the input data file and process its contents */
   if ((in_fp = fopen ("front.in", "r")) == NULL)
     printf("ERROR - cannot open front.in \n");
@@ -55,7 +56,7 @@ main() {
 /* look up - a function to lookup operators and parentheses
                 and return the token */
 int lookup (char ch) {
-  swith(ch) {
+  switch(ch) {
     case '(':
       addChar();
       nextToken = LEFT_PAREN;
@@ -120,12 +121,12 @@ void getChar() {
   } else {
       charClass = EOF;
   }
-
+}
 /************************************************/
 /* getNonBlank - a function to call getChar until it
                   returns a non-whitespace character */
 
-void  getNonBlank() {
+void getNonBlank() {
   while (isspace(nextChar)) {
     getChar();
   }
