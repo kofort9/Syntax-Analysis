@@ -52,8 +52,7 @@ int main() {
     getChar();
     do {
        lex();
-       expr();
-        //stmt();
+       stmt();
     } while(nextToken != EOF);
   }
 }
