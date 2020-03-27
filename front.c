@@ -51,8 +51,10 @@ int main() {
   else {
     getChar();
     do {
-      lex();
-    } while( nextToken != EOF);
+       lex();
+       expr();
+        //stmt();
+    } while(nextToken != EOF);
   }
 }
 
@@ -177,10 +179,10 @@ void getNonBlank() {
             lexeme[0] = 'E';
             lexeme[1] = 'O';
             lexeme[2] = 'F';
-            lexeme[3] = '0';
+            lexeme[3] = 0;
             break;
       } /* End of switch */
-      printf("Nex token is: %d, NExt lexeme is %s\n",
+      printf("Next token is: %d,   Next lexeme is %s\n",
               nextToken, lexeme);
       return nextToken;
   }/* End of function lex */
@@ -195,28 +197,16 @@ void getNonBlank() {
 void stmt() {
   printf("Enter <stmt>\n");
 
+  /* Parse the first term */
+    expr();
+
   /* Determine which RHS */
-  if (nextToken == IDENT) {
+    while(nextToken == IDENT) {
   /* Get the next token */
-    lex();
-  /* If <expr>, call lex to pass over the
-  left parenthesis, call expr, and check for the right
-   parenthesis */
-  } else {
-   if (nextToken == LEFT_PAREN) {
-     lex();
-     expr();
-     if (nextToken == RIGHT_PAREN) {
-       lex();
-     } else {
-       error();
-     } /* End of if (nextToken == ...) */
-  /* It was not an id or a left parentheses */
-   } else {
-     error();
-   } /* End of else */
- }
- printf("Exit <stmt>\n", );
+      lex();
+      expr();
+    }
+ printf("Exit <stmt>\n");
 } /* End of function statment */
 
 /* expr
@@ -254,7 +244,7 @@ void term() {
     lex();
     factor();
   }
-  printf("Exixt <term>\n");
+  printf("Exit <term>\n");
 } /* End of function term */
 
 /* factor
@@ -265,7 +255,7 @@ void factor() {
   printf("Enter <factor>\n");
 
 /* Determine which RHS */
-  if (nextToken == IDENT || nextToken ++ INT_LIT){
+  if (nextToken == IDENT || nextToken == INT_LIT){
 /* Get the next token */
     lex();
 
@@ -279,14 +269,14 @@ parenthesis */
       if (nextToken == RIGHT_PAREN){
         lex();
       } else {
-        error();
+        printf("Error\n");
       } /* End of if (nextToken == ... */
+
 /*  It was not an id, an intger literal, or a left
 parenthesis */
     } else {
-      error();
+      printf("Error\n");
     } /* End of else */
-
-    printf("Exit <factor>\n");
   }
+  printf("Exit <factor>\n");
 }  /* End of function factor */
